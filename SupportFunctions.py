@@ -7,19 +7,6 @@ from sklearn.feature_extraction.text import HashingVectorizer
 import hashlib
 import sys
 
-tempratureAndRain = {1 : [10.7, 11.7],
-                     2 : [12.2, 11.1],
-                     3 : [12.8, 11.0],
-                     4 : [13.4, 6.5],
-                     5 : [14.2, 3.8],
-                     6 : [15.3, 1.5],
-                     7 : [15.7, 0.3],
-                     8 : [16.4, 1.0],
-                     9 : [17.1, 1.7],
-                     10 : [16.4, 3.9],
-                     11 : [13.7, 8.9],
-                     12 : [10.9, 11.6]}
-
 
 weekDays = {"Sunday" : 0, 
             "Monday" : 1,
@@ -228,12 +215,6 @@ def PDDistriction(column):
             resColumns[i][key] = 1
 
     return resColumns
-
-
-
-def GetWeathere(month):
-    res = tempratureAndRain[month]
-    return res[0], res[1]
 
 
 

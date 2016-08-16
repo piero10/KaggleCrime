@@ -156,10 +156,6 @@ class DataStorage:
 
             print("data saved to file." ) 
 
-        #if not UseStreets:
-        #    self.TrainData = self.TrainData[:,0:31]
-        #    self.TestData = self.TestData[:,0:31]
-
 
 
         if UseExternalGeoDataNearestest:
@@ -173,18 +169,24 @@ class DataStorage:
             self.TestData = np.c_[self.TestData, self.GeoData[len(self.Labels):len(dataTogether)]]
 
 
-        self.TrainDataHalf1 = self.TrainData[::2]
+        '''self.TrainDataHalf1 = self.TrainData[::2]
         self.TrainDataHalf2 = self.TrainData[1::2]
 
         self.LabelsDataHalf1 = self.Labels[::2]
         self.LabelsDataHalf2 = self.Labels[1::2]
 
         self.LabelsNHalf1 = self.LabelsN[::2]
-        self.LabelsNHalf2 = self.LabelsN[1::2]
+        self.LabelsNHalf2 = self.LabelsN[1::2]'''
+		
+		self.TrainDataHalf1, self.TrainDataHalf2, self.LabelsDataHalf1, self.LabelsDataHalf2, self.LabelsNHalf1, self.LabelsNHalf2 = 
+		sp.SplitTrainDataByWeeks(self.TrainData, self.Labels, self.LabelsN)
+		
 
         if filtering:
             self.TrainDataHalf1,  self.LabelsDataHalf1 = self.DeleteFromTrainDataAllRowsWithCorrelationLessThan(self.TrainDataHalf1,  self.LabelsDataHalf1, 402, 0.99)
 
+
+			
 
     def LoadGeoNearestData(self):
         dat = np.load(self.commonPath + "dump_allData_nearest.npy")
@@ -248,16 +250,6 @@ class DataStorage:
         
         dataNormalized = np.c_[dateTime, dataNormalized, weekDaysBinarized, coordinates, distriction, streetsTypes, severalActionsInSameTime, corner]
 
-
-        '''dataNormalized = dateTime
-        dataNormalized = np.c_[dataNormalized, weekDaysBinarized]
-        dataNormalized = np.c_[dataNormalized, coordinates]
-        dataNormalized = np.c_[dataNormalized, distriction]
-        dataNormalized = np.c_[dataNormalized, streetsTypes]
-        #dataNormalized = np.c_[dataNormalized, streets]
-        dataNormalized = np.c_[dataNormalized, severalActionsInSameTime]
-        dataNormalized = np.c_[dataNormalized, corner]'''
-
         return dataNormalized
 
 
@@ -269,7 +261,6 @@ class DataStorage:
         a = df.values[:, 0:1]
         b = df.values[:, 3:5]
         c = df.values[:, 6:9]
-
 
         trainData = np.c_[a, b]
         trainData = np.c_[trainData, c]
@@ -392,8 +383,6 @@ class DataStorage:
                 t[ii + 1] = str(round(data[i, ii], 5)) 
 
             f.writerow(t)            
-            #gg = np.c_(t, data[i]) # np.c_[[i], [data[i]]]
-            #f.writerow(gg)
 
         print("submission saved")
         b.close()

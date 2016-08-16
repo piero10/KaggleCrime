@@ -187,7 +187,6 @@ def PredictGauss(trainData, labels, testData):
     clf = GaussianNB()
     clf.fit(trainData, labels)
     predict = clf.predict(testData)
-    #predict1 = clf.predict_proba(testData)
     return predict
 
 
@@ -199,7 +198,6 @@ def PredictRandomForest(trainData, labels, testData, dep = 20, n_est = 100, max_
     return predict[:,1] 
 
 
-# ????? ?????
 def PredictSVC(trainData, labels, testData):
     clf = SVC(gamma=0.2)
     clf.fit(trainData, labels)
